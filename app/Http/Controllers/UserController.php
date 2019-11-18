@@ -12,6 +12,7 @@ use App\Mail\PasswordReset;
 
 class UserController extends Controller
 {
+
     public function register(Request $request){
         $plainPassword=$request->password;
         $password=bcrypt($request->password);
