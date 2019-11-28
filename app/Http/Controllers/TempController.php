@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\User;
-use App\Car;
+use App\Temp;
+
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class TempController extends Controller
 {
        /**
      * Display a listing of the resource.
@@ -16,14 +15,14 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::get();
-        $comments =  Comment::with('users')->latest()->get();
+        $temp = Temp::get();
+        $temp =  Temp::latest()->get();
 
-        return \json_encode($comments);
+        return \json_encode($temp);
     }
-    public function showComment($id){
-        $comments = Comment::findOrFail($id);
-        return \json_encode($comments);
+    public function showTemp($id){
+        $temp = Temp::findOrFail($id);
+        return \json_encode($temp);
 
     }
 
@@ -48,15 +47,15 @@ class CommentController extends Controller
     {
 
             //dd($request->project);
-            $comment = new Comment();
-            $comment->comment = $request->comment;
-            $comment->rating = $request->rating;
+            $temp = new Temp();
+            $temp->mac = $request->mac;
+            $temp->value = $request->value;
+            $temp->flame = $request->flame;
+            $temp->smoke = $request->smoke;
 
-            $userId= $request->user_id;
-            $carId= $request->car_id;
             // return response()->json([
             //     'success' => false,
-            //     'comment' => $comment,
+            //     'comment' => $temp,
             //     'user_id' => $userId,
             //     'user' => $user
             // ]);
@@ -64,52 +63,16 @@ class CommentController extends Controller
             // $data = [
             //     'image' => '',
             // ];
-            try
-            {
-                $comment->save();
-
-                $car = Car::find($carId);
-                $car->comments()->save($comment);
-                $car->save();
-                //dd($project);
-
-                //dd($request->project);
-               // dd($projectId);
-               $comment->save();
-
-               $user = User::find($userId);
-               //dd($project);
-               // $tier = Tier::find($tierId);
-               // $class = Classes::find($classId);
-               // $status = Status::find($statusId);
-               $user->comments()->save($comment);
-               $user->save();
-               $comment->save();
-
-               //dd($project);
-
-            }
-            // catch(Exception $e) catch any exception
-            catch(ModelNotFoundException $e)
-            {
-
-                return response()->json([
-                    'success' => false,
-                    'comment' => $comment
-                ]);
-            }
 
 
-            $comment->save();
+            $temp->save();
             //dd($agent);
 
 
 
             return response()->json([
                 'success' => true,
-                'comment' => $comment,
-                'user_id' => $userId,
-                'user' => $user
+                'comment' => $temp,
             ]);
 
 

@@ -25,18 +25,6 @@ Route::post('/logout', 'UserController@logout');
 
 
 
-Route::get('/car/{id}', 'CarController@showCar');
-Route::get('/cars', function () {
-    $cars = Car::all();
-    return \json_encode($cars);
-});
 
-Route::get('/users', function () {
-    $users = User::all();
-
-
-    return \json_encode($users);
-
-});
-
-Route::get('/comments', 'CommentController@index');
+Route::get('/temps', 'TempController@index');
+Route::post('/temps', 'TempController@store');
